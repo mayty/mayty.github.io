@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+
+<title>Лекция</title>
+<style type="text/css">
+ body {font-family: Arial, sans-serif;}
+ .c {font-family: "Courier New", Courier, monospace}
+</style>
+
+</HEAD><BODY>
+
+<div align="justify">
+
+<p>&nbsp;</p>
+<div align="center">
+<p><strong>СЕРВЕРНОЕ ОБОРУДОВАНИЕ И СЕТЕВЫЕ СИСТЕМЫ ХРАНЕНИЯ ДАННЫХ</strong></p>
+</div>
+<p>&nbsp;</p>
+
+<p>В рамках данной дисциплины, требуется понимание общей классификации серверных систем с целью их правильного выбора при необходимости.</p>
+
+<p>Классификация серверов.</p>
+
+<p>С точки зрения назначения:<br>
+1.&nbsp;Файловые -- предназначены для хранения информации.<br>
+2.&nbsp;Вычислительные -- предназначены для быстрого решения задач обработки информации.<br>
+3.&nbsp;Коммуникационные -- предназначены для объединения подсетей.<br>
+4.&nbsp;Серверы печати -- предназначены для организации централизованной печати.<br>
+5.&nbsp;Специализированные -- предназначены для решения специфических задач (банковские, военные, графические и другие).</p>
+
+<p>С точки зрения масштабируемости:<br>
+1.&nbsp;Stand-alone servers -- оптимизированы как независимые.<br>
+2.&nbsp;Clusters -- кластеры, предусмотрена возможность масштабирования.</p>
+
+<p>С точки зрения стоимости:<br>
+1.&nbsp;Low-end (Entry-level) -- обычно stand-alone на базе архитектуры Intel (цена обычно до 10 000 $).<br>
+2.&nbsp;Mid-range -- обычно stand-alone на базе различных RISC-архитектур, например, SPARC (цена обычно около 10 000 $).<br>
+3.&nbsp;High-end -- обычно clusters базе различных RISC-архитектур (цена обычно много больше 10 000 $).</p>
+
+<p>Производители серверного оборудования:<br>
+High-end: Oracle (Sun), IBM, Silicon Graphics, Fujitsu, HP, Cray и некоторые другие.<br>
+Low-end: Compaq (HP), Dell и другие.</p>
+
+<p>При проектировании или модернизации КС часто возникает задача создания централизованных файловых хранилищ различной степени сложности, которые принято называть SANs (Storage Area Networks).</p>
+
+<p>Подсистемы накопителей традиционных файловых серверов могут быть внутренними (internal storages) и внешними (external storages). Наряду с этим, уверенно сформировалось направление под названием NASes (Network-Attached Storages) -- высоко специализированные станции, единственным назначением которых является предоставление доступа к накопителям посредством сети. Традиционные файловые серверы хоть и специализированы, но, в сравнении с NASes, более универсальны и «масштабны». NASes более компактны.</p>
+
+<p>В настоящее время в большинстве выпускаемых high-end-серверов для подключения накопителей используется последовательный вариант шины SCSI -- SAS (Serial Attached SCSI). Хотя по-прежнему массово эксплуатируются и множество серверов с параллельным вариантом SCSI (серверный рынок не столь динамичен). Также стоит отметить, что рынок SAS сильно потеснен рынком SATA. При разработке SAS была предусмотрена частичная совместимость с SATA -- при наличии соответствующего разъема, SATA-накопитель можно подключить к SAS-контроллеру, но не наоборот. Современные SAS-интерфейсы поддерживают скорость до 12 Gbit/s.</p>
+
+<div align="center">
+<img src="lk09.01.bmp">
+<br>
+Рисунок -- Место SCSI-контроллера в компьютере
+</div>
+
+<p>Кроме SAS, еще одним плодом развития SCSI стали реализации iSCSI (internet SCSI) -- позволяют передавать систему команд SCSI посредством транспорта TCP/IP.</p>
+
+<div align="center">
+<img src="lk09.02.bmp">
+<br>
+Рисунок -- Модель iSCSI
+</div>
+
+<p>Модель iSCSI, как обычно и бывает в подобных случаях, включает:<br>
+1.&nbsp;iSCSI Initiator -- активное устройство-инициатор, генерирующее команды.<br>
+2.&nbsp;iSCSI Target -- пассивное целевое устройство, выполняющее команды инициатора.</p>
+
+<p>Как устройства-инициаторы, так и целевые устройства могут быть как аппаратными (то есть «зашитыми в оборудование»), так и сугубо программными. С одним целевым устройством одновременно могут работать несколько инициаторов.</p>
+
+<p>Характеристики и критерии выбора оборудования SCSI (и SATA):<br>
+1.&nbsp;Степень интеграции контроллера: add-on (HBA -- Host-Bus Adapter), on-board.<br>
+2.&nbsp;Число каналов контроллера: 1 либо 2.<br>
+3.&nbsp;Электрическая совместимость (актуально для параллельного варианта SCSI): LVD (Low-Voltage Differential), SE (Single-Ended), LVD/SE.<br>
+4.&nbsp;Механическая совместимость разъемов для внутреннего либо внешнего подключения. Наиболее распространенные разъемы параллельного варианта SCSI: IDC-50 (Ultra и Wide), HD-68 (Ultra160 и Ultra320) и SCA-80 (hot-swap). Наиболее распространенные разъемы SAS: SSF-8482.<br>
+5.&nbsp;Возможность подключения накопителей «на лету» (hot-swap).<br>
+6.&nbsp;Наличие на адаптере кэш-памяти и ее объем.<br>
+7.&nbsp;Наличие на адаптере резервного источника питания.<br>
+8.&nbsp;Наличие add-on BIOS и его «расположение».<br>
+9.&nbsp;Возможности построения RAID-массивов.</p>
+
+<p>Объединение накопителей в RAID-массивы применяется для увеличения надежности или производительности. RAID-массивы строятся как аппаратно, так и программно.</p>
+
+<p>Введены специальные характеристики надежности RAID-массивов, такие как MTRR (Mean Time To Recovery), MTTF (Mean Time To Failure), MTBF (Mean Time Between Failures), UBE (Unrecoverable Bit Error rate) и другие.</p>
+
+<p>Применительно к оборудованию, варианты более или менее стандартизированы и называются уровнями (levels). Аппаратный логический накопитель, строящийся на базе нескольких физических накопителей и «видимый» ПО как один физический накопитель, разбивается на блоки A, B, C ... (например, по 16 kByte), причем возможны еще бо'льшая фрагментация Aa, Ab, Ac ... и дублирование A1, A2, A3 ... Кроме всего прочего, с целью обеспечения возможности восстановления данных, могут выделяться специальные блоки или целые диски под обобщенным названием Hot Spare.</p>
+
+<p>Таким образом, RAID-массивы делятся на:<br>
+1.&nbsp;Блок-ориентированные (block oriented).<br>
+2.&nbsp;Субблок-ориентированные (subblock oriented), причем могут быть:<br>
+--&nbsp;байт-ориентированные (byte oriented);<br>
+--&nbsp;бит-ориентированные (bit oriented).</p>
+
+<p>Стандартные уровни:<br>
+(На основе текущих реализаций Adaptec, однако это не догма.)</p>
+
+<div align="center">
+<img src="lk09.03.jpg">
+<br>
+Рисунок -- RAID 0 -- Striping
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.04.jpg">
+<br>
+Рисунок -- RAID 1 -- Mirroring
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.05.jpg">
+<br>
+Рисунок -- RAID 1E -- Striped Mirroring
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.06.jpg">
+<br>
+Рисунок -- RAID 5 -- Striping with Parity
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.07.jpg">
+<br>
+Рисунок -- RAID 5EE -- Hot Space
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.08.jpg">
+<br>
+Рисунок -- RAID 6 -- Striping with Dual Parity
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.09.jpg">
+<br>
+Рисунок -- RAID 10 -- Striped RAID 1 Sets
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.10.jpg">
+<br>
+Рисунок -- RAID 50 -- Striped RAID 5 Sets
+</div>
+
+<p>&nbsp;</p>
+
+<div align="center">
+<img src="lk09.11.jpg">
+<br>
+Рисунок -- RAID 60 -- Striped RAID 6 Sets
+</div>
+
+<p>Таблица -- Сравнительные характеристики RAID-массивов
+<table border="1" cellspacing="1" cellpadding="1">
+<tr><td align="justify">RAID Level</td><td align="center">0</td><td align="center">1</td><td align="center">1E</td><td align="center">5</td><td align="center">5EE</td><td align="center">6</td><td align="center">10</td><td align="center">50</td><td align="center">60</td></tr>
+<tr><td align="justify"># of drives</td><td align="center">Min 2</td><td align="center">Min 2</td><td align="center">Min 3</td><td align="center">3 -- 16</td><td align="center">4 -- 16</td><td align="center">4 -- 16</td><td align="center">Min 4</td><td align="center">Min 6</td><td align="center">Min 8</td></tr>
+<tr><td align="justify">Max # of failure drives</td><td align="center">--</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">1 per subarray</td><td align="center">1 per subarray</td><td align="center">2 per subarray</td></tr>
+<tr><td align="justify">Read performance</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td><td align="center">High</td></tr>
+<tr><td align="justify">Write performance</td><td align="center">High</td><td align="center">Medium</td><td align="center">Medium</td><td align="center">Low</td><td align="center">Low</td><td align="center">Low</td><td align="center">Medium</td><td align="center">Medium</td><td align="center">Medium</td></tr>
+<tr><td align="justify">Read performance (degraded)</td><td align="center">--</td><td align="center">Medium</td><td align="center">High</td><td align="center">Low</td><td align="center">Low</td><td align="center">Low</td><td align="center">High</td><td align="center">Medium</td><td align="center">Medium</td></tr>
+<tr><td align="justify">Write performance (degraded)</td><td align="center">--</td><td align="center">High</td><td align="center">High</td><td align="center">Low</td><td align="center">Low</td><td align="center">Low</td><td align="center">High</td><td align="center">Medium</td><td align="center">Low</td></tr>
+<tr><td align="justify">Capacity Utilization</td><td align="center">100 %</td><td align="center">50 %</td><td align="center">50 %</td><td align="center">67--94 %</td><td align="center">50--88 %</td><td align="center">67--94 %</td><td align="center">50 %</td><td align="center">67--94 %</td><td align="center">50--88 %</td></tr>
+</table>
+</p>
+
+<p>Примеры названий ранее популярных уровней:<br>
+RAID 2 -- Parallel Access with Hamming ECC.<br>
+RAID 3 -- Parallel Access with a Dedicated Parity Disk.<br>
+RAID 4 -- Independent Access with a Dedicated Parity Disk.</p>
+
+<p>Особо следует упомянуть технологию Intel Rapid Storage, позволяющую строить несколько уровней на одних и тех же дисках.</p>
+
+<div align="center">
+<img src="lk09.12.jpg">
+<br>
+Рисунок -- Intel Rapid Storage
+</div>
+
+<p>RAID-массивы, как правило, строятся на базе идентичных физических накопителей, но существует специальная технология JBOD (Just a Bunch of Disks), позволяющая объединять произвольные физические накопители.</p>
+
+<p>Почти все RAID-контроллеры сочетают в себе функционал SCSI-контроллеров (SATA-контроллеров). Если возникала необходимость создания RAID-массива, а на материнской плате уже есть SCSI-контроллер, то можно воспользоваться адаптером с «облегченным» RAID-котроллером (zero-channel).</p>
+
+<p>Нужно помнить о балансе производительности шины расширения компьютера, контроллера и накопителей.</p>
+
+<p>Для первоначального формирования аппаратного RAID-массива необходим интерфейс Add-on BIOS, активируемый при загрузке.</p>
+
+<p>Производители оборудования SCSI (и SATA):<br>
+High-end: Adaptec, LSI Logic, Intel и некоторые другие.<br>
+Low-end: 3Ware, Tekram, Promise, Initio, Silicon Image и некоторые другие.</p>
+
+</div>
+
+</BODY>
+</HTML>
